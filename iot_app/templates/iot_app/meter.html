@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensor Meter</title>
+    {% load static %}  <!-- Load the static template tag -->
+    <link rel="stylesheet" href="{% static 'iot_app/css/styles.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        #meter {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: #e7d7d7;
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+            border: 5px solid #333;
+        }
+
+        .meter-value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .needle {
+            position: absolute;
+            width: 2px;
+            height: 90px;
+            background-color: red;
+            transform-origin: bottom center;
+            left: 50%;
+            bottom: 50%;
+            transform: translateX(-50%) rotate(0deg);
+        }
+    </style>
+</head>
+<body>
+    <div id="meter">
+        <div class="needle" id="needle"></div>
+        <div class="meter-value" id="meterValue">0 cm</div>
+    </div>
+
+    <script src="{% static 'iot_app/js/script.js' %}"></script>
+    <script>
+        const meter = document.getElementById('meter');
+        const needle = document.getElementById('needle');
+        const meterValue = document.getElementById('meterValue');
+
+        // Update meter animation based on sensor data
+        function updateMeter(distance) {
+            console.log(`Distance: ${distance} cm`);
+            meterValue.innerHTML = `${distance} cm`;
+
+            // Calculate the rotation angle for the needle
+            const maxDistance = 100; // Adjust this value based on your sensor's max range
+            const angle = (distance / maxDistance) * 180; // Map distance to angle (0 to 180 degrees)
+            needle.style.transform = `translateX(-50%) rotate(${angle}deg)`;
+        }
+
+        // Make an AJAX request to retrieve the sensor data
+        function getSensorData() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/api/latest-distance/', true);  // Updated URL
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    var sensorData = response.distance;  // Get distance from response
+                    updateMeter(sensorData);
+                }
+            };
+            xhr.send();
+        }
+
+        // Call the function to retrieve the sensor data every 500ms
+        setInterval(getSensorData, 500);
+    </script>
+</body>
+</html>

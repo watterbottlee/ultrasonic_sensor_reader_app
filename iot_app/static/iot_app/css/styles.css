@@ -1,0 +1,7 @@
+#meter {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-color: #e7d7d7;
+    margin: 20px auto;
+}
