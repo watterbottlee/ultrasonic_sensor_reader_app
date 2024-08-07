@@ -1,7 +1,6 @@
 # Each service listed will be deployed in its own container as part of your
 # Platform.sh project.
-services:
-  db:
-    type: postgresql:12
-    disk: 
-      size: "1024"  # Enclose the size in quotes to make it a string
+db:
+  type: postgresql:12
+  disk: 
+    size: "512"  # Enclose the size in quotes to make it a string
