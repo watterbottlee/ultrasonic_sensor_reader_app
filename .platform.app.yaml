@@ -2,8 +2,7 @@ name: "iot_project"
 type: "python:3.10"
 
 relationships:
-    database:
-        type: "db:postgresql"
+    database: "db:postgresql"
 
 # The configuration of the app when it's exposed to the web.
 web:
@@ -21,7 +20,7 @@ web:
 
 # The size of the persistent disk of the application (in MB).
 disk:
-    size: 512
+    size: 1024
 
 # Set a local read/write mount for logs.
 mounts:

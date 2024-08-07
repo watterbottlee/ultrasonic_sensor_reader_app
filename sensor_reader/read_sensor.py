@@ -4,7 +4,7 @@ import requests
 import json  # Import json to handle JSON data
 
 # Set up the serial connection
-ser = serial.Serial('COM6', 9600)  # Adjust the port name as necessary
+ser = serial.Serial('COM7', 9600)  # Adjust the port name as necessary
 time.sleep(2)  # Wait for the connection to establish
 
 def read_sensor_data():
