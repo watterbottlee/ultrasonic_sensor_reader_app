@@ -3,4 +3,4 @@
 db:
   type: postgresql:12
   disk:
-    size: "512"  # Enclose the size in quotes to make it a string
+    size: 512  # Enclose the size in quotes to make it a string
